@@ -1,14 +1,16 @@
 {
-	"name": "frontend",
+	"name": "demo-solar-finance-app",
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
+		"start": "node build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"postinstall": "npm run db:setup",
+		"prebuild": "node scripts/init-db-dir.js",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
@@ -24,11 +26,17 @@
 		"db:setup": "npm run db:push && npm run db:seed",
 		"db:reset": "rm -f solar-finance.db && npm run db:setup"
 	},
+	"dependencies": {
+		"better-sqlite3": "^11.8.0",
+		"drizzle-orm": "^0.40.0",
+		"lucide-svelte": "^0.525.0"
+	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
 		"@eslint/js": "^9.18.0",
 		"@playwright/test": "^1.49.1",
-		"@sveltejs/adapter-vercel": "^5.6.3",
+		"@sveltejs/adapter-node": "^5.2.13",
+		"@sveltejs/adapter-vercel": "^5.8.0",
 		"@sveltejs/kit": "^2.22.0",
 		"@sveltejs/vite-plugin-svelte": "^6.0.0",
 		"@tailwindcss/vite": "^4.0.0",
@@ -54,11 +62,6 @@
 		"vite": "^7.0.4",
 		"vitest": "^3.2.3",
 		"vitest-browser-svelte": "^0.1.0"
-	},
-	"dependencies": {
-		"better-sqlite3": "^11.8.0",
-		"drizzle-orm": "^0.40.0",
-		"lucide-svelte": "^0.525.0"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [

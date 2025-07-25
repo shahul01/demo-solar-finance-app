@@ -9,6 +9,9 @@ node_modules
 /.svelte-kit
 /build
 
+# Railway
+.railway
+
 # OS
 .DS_Store
 Thumbs.db
