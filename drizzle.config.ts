@@ -1,11 +1,10 @@
-import { defineConfig } from 'drizzle-kit';
+import type { Config } from 'drizzle-kit';
 
-const databaseUrl = process.env.DATABASE_URL || '/app/data/solar-finance.db';
-
-export default defineConfig({
+export default {
 	schema: './src/lib/server/db/schema.ts',
-	dialect: 'sqlite',
-	dbCredentials: { url: databaseUrl },
-	verbose: true,
-	strict: true
-});
+	out: './drizzle',
+	dialect: 'postgresql',
+	dbCredentials: {
+		url: process.env.DATABASE_URL!
+	}
+} satisfies Config;
