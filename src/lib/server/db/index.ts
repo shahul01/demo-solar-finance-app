@@ -9,8 +9,17 @@ if (building) {
 	throw new Error('Database should not be accessed during build');
 }
 
-if (!env.DATABASE_URL) throw new Error('DATABASE_URL is not set');
+let db: ReturnType<typeof drizzle> | null = null;
 
-const client = new Database(env.DATABASE_URL);
+function getDb() {
+	if (!db) {
+		if (!env.DATABASE_URL) {
+			throw new Error('DATABASE_URL is not set');
+		}
+		const client = new Database(env.DATABASE_URL);
+		db = drizzle(client, { schema });
+	}
+	return db;
+}
 
-export const db = drizzle(client, { schema });
+export { getDb as db };
