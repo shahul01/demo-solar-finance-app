@@ -147,10 +147,12 @@ export class ProjectService {
 		const laborTotal = breakdown.find((b) => b.categoryName === 'Labor')?.total || 0;
 		const commissionTotal = breakdown.find((b) => b.categoryName === 'Commission')?.total || 0;
 		const adminTotal = breakdown.find((b) => b.categoryName === 'Admin')?.total || 0;
+		const addersTotal = breakdown.find((b) => b.categoryName === 'Adders')?.total || 0;
 
 		const totalCogs = bomTotal + laborTotal;
 		const grossMargin = projectWithCosts.netSystemPrice - totalCogs;
-		const netIncome = grossMargin - commissionTotal - adminTotal;
+		// Adders are added to income (positive value increases net income)
+		const netIncome = grossMargin - commissionTotal - adminTotal + addersTotal;
 
 		return {
 			bomTotal,

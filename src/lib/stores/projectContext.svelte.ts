@@ -98,8 +98,8 @@ export class ProjectContextClass {
 
 		if (this.editingField.field === 'netSystemPrice') {
 			await this.updateProjectPrice(numValue);
-		} else {
-			// Extract line item ID from field name (e.g., 'lineItem-5' -> 5)
+		} else if (this.editingField.field.startsWith('lineItem-')) {
+			// Extract line item ID from field name (e.g., 'lineItem-16' -> 16)
 			const lineItemId = parseInt(this.editingField.field.split('-')[1]);
 			await this.updateProjectCost(lineItemId, numValue);
 		}

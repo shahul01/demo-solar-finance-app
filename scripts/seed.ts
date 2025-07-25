@@ -34,7 +34,8 @@ export async function seedDatabase() {
 			{ id: 2, name: 'Labor', description: 'Labor and Installation Costs', sortOrder: 2 },
 			{ id: 3, name: 'Fees', description: 'Permits and Administrative Fees', sortOrder: 3 },
 			{ id: 4, name: 'Commission', description: 'Sales Commission', sortOrder: 4 },
-			{ id: 5, name: 'Admin', description: 'General & Administrative', sortOrder: 5 }
+			{ id: 5, name: 'Admin', description: 'General & Administrative', sortOrder: 5 },
+			{ id: 6, name: 'Adders', description: 'Additional Project Revenue/Costs', sortOrder: 6 }
 		]);
 
 		// Seed cost line items
@@ -71,7 +72,9 @@ export async function seedDatabase() {
 			{ id: 15, categoryId: 3, accountCode: null, name: 'Utility Connection', sortOrder: 2 },
 			// Commission & Admin
 			{ id: 16, categoryId: 4, accountCode: null, name: 'Sales Commission', sortOrder: 1 },
-			{ id: 17, categoryId: 5, accountCode: null, name: 'General & Administrative', sortOrder: 1 }
+			{ id: 17, categoryId: 5, accountCode: null, name: 'General & Administrative', sortOrder: 1 },
+			// Adders
+			{ id: 18, categoryId: 6, accountCode: null, name: 'Adders', sortOrder: 1 }
 		]);
 
 		// Seed sample projects
@@ -133,6 +136,7 @@ export async function seedDatabase() {
 			{ projectId: 1, lineItemId: 10, amount: 0.0 }, // Interconnection
 			{ projectId: 1, lineItemId: 16, amount: 5599.0 }, // Commission
 			{ projectId: 1, lineItemId: 17, amount: 3312.0 }, // G&A
+			{ projectId: 1, lineItemId: 18, amount: 2500.0 }, // Adders (e.g., tree removal)
 
 			// Jerome Richmond (ID: 2) - basic costs
 			{ projectId: 2, lineItemId: 1, amount: 5500.0 }, // Modules
@@ -141,6 +145,7 @@ export async function seedDatabase() {
 			{ projectId: 2, lineItemId: 9, amount: 150.0 }, // Inspection
 			{ projectId: 2, lineItemId: 16, amount: 4200.0 }, // Commission
 			{ projectId: 2, lineItemId: 17, amount: 2800.0 }, // G&A
+			{ projectId: 2, lineItemId: 18, amount: 1800.0 }, // Adders (e.g., roof repair)
 
 			// Eli Ezrow (ID: 3) - basic costs
 			{ projectId: 3, lineItemId: 1, amount: 11000.0 }, // Modules
@@ -148,7 +153,8 @@ export async function seedDatabase() {
 			{ projectId: 3, lineItemId: 7, amount: 450.0 }, // Permitting
 			{ projectId: 3, lineItemId: 9, amount: 200.0 }, // Inspection
 			{ projectId: 3, lineItemId: 16, amount: 8500.0 }, // Commission
-			{ projectId: 3, lineItemId: 17, amount: 5200.0 } // G&A
+			{ projectId: 3, lineItemId: 17, amount: 5200.0 }, // G&A
+			{ projectId: 3, lineItemId: 18, amount: 0.0 } // No adders
 		]);
 
 		// Seed budget targets (per watt targets)
@@ -159,7 +165,8 @@ export async function seedDatabase() {
 			{ lineItemId: 4, targetPerWatt: 0.0 }, // Warranty target
 			{ lineItemId: 5, targetPerWatt: 0.068 }, // BOS target
 			{ lineItemId: 7, targetPerWatt: 0.066 }, // Permitting target
-			{ lineItemId: 9, targetPerWatt: 0.059 } // Inspection target
+			{ lineItemId: 9, targetPerWatt: 0.059 }, // Inspection target
+			{ lineItemId: 18, targetPerWatt: 0.0 } // Adders target (varies by project)
 		]);
 
 		console.log('Database seeded successfully!');

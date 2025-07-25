@@ -19,6 +19,19 @@
 	// Get breakdown by category
 	const bomBreakdown = $derived(breakdown.find((b) => b.categoryName === 'BOM'));
 	const laborBreakdown = $derived(breakdown.find((b) => b.categoryName === 'Labor'));
+	const commissionBreakdown = $derived(breakdown.find((b) => b.categoryName === 'Commission'));
+	const adminBreakdown = $derived(breakdown.find((b) => b.categoryName === 'Admin'));
+	const addersBreakdown = $derived(breakdown.find((b) => b.categoryName === 'Adders'));
+
+	// Get current values for commission, admin, and adders
+	const commissionAmount = $derived(commissionBreakdown?.total || 0);
+	const adminAmount = $derived(adminBreakdown?.total || 0);
+	const addersAmount = $derived(addersBreakdown?.total || 0);
+
+	// Recalculated values based on current data
+	const totalCogs = $derived((calculations?.totalCogs || 0));
+	const grossMargin = $derived((project?.netSystemPrice || 0) - totalCogs);
+	const netIncome = $derived(grossMargin - commissionAmount - adminAmount + addersAmount);
 </script>
 
 {#snippet EditableField(label: string, field: string, value: number, isPerWatt: boolean = false)}
@@ -112,7 +125,7 @@
 	<div
 		class="bg-[hsl(229.85deg_4.98%_9.89%_/_75%)] bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center"
 	>
-		<div class="max-h-[90vh] w-full max-w-2xl overflow-hidden rounded-lg bg-white shadow-xl">
+		<div class="max-h-[92vh] w-full max-w-2xl overflow-hidden rounded-lg bg-white shadow-xl">
 			<div class="flex items-center justify-between border-b p-6">
 				<div>
 					<h2 class="text-xl font-bold text-gray-800">Project P&L Detail</h2>
@@ -132,6 +145,14 @@
 					{@render EditableField('Net System Price', 'netSystemPrice', project.netSystemPrice)}
 					<div class="px-4 py-1 text-right text-sm text-gray-500">
 						${(project.netSystemPrice / watts).toFixed(4)}/W
+					</div>
+				</div>
+
+				<!-- Adders Section (Revenue) -->
+				<div class="border-b border-gray-200 bg-blue-50">
+					{@render EditableField('Adders (Additional Revenue)', 'lineItem-18', addersAmount)}
+					<div class="px-4 py-1 text-right text-sm text-blue-600">
+						${(addersAmount / watts).toFixed(4)}/W
 					</div>
 				</div>
 
@@ -173,42 +194,42 @@
 						<div class="flex items-center justify-between px-4 py-3">
 							<span class="font-semibold text-green-800">Gross Margin</span>
 							<div class="flex items-center gap-4">
-								<span class="font-semibold">${calculations.grossMargin.toLocaleString()}</span>
+								<span class="font-semibold">${grossMargin.toLocaleString()}</span>
 								<span class="text-sm text-green-600"
-									>${calculations.perWattCosts.grossMarginPerWatt.toFixed(4)}/W</span
+									>${(grossMargin / watts).toFixed(4)}/W</span
 								>
 							</div>
 						</div>
 					</div>
 				{/if}
 
-				<!-- Operating Expenses (if available in breakdown) -->
-				{#each breakdown.filter((b) => b.categoryName === 'Commission' || b.categoryName === 'Admin') as category}
-					<div class="border-b border-gray-200">
-						<div class="flex items-center justify-between px-4 py-3">
-							<span class="font-semibold text-gray-800">{category.categoryName}</span>
-							<div class="flex items-center gap-4">
-								<span class="text-right">${category.total.toLocaleString()}</span>
-								<span class="text-sm text-gray-500">${(category.total / watts).toFixed(4)}/W</span>
-							</div>
-						</div>
+				<!-- Operating Expenses -->
+				<div class="border-b border-gray-200">
+					{@render EditableField('Commission', 'lineItem-16', commissionAmount)}
+					<div class="px-4 py-1 text-right text-sm text-gray-500">
+						${(commissionAmount / watts).toFixed(4)}/W
 					</div>
-				{/each}
+				</div>
 
-				{#if calculations}
-					<!-- Net Income -->
-					<div class="border-b bg-yellow-50">
-						<div class="flex items-center justify-between px-4 py-3">
-							<span class="font-bold text-yellow-800">Net Income</span>
-							<div class="flex items-center gap-4">
-								<span class="text-lg font-bold">${calculations.netIncome.toLocaleString()}</span>
-								<span class="font-medium text-yellow-600"
-									>${calculations.perWattCosts.netIncomePerWatt.toFixed(4)}/W</span
-								>
-							</div>
+				<div class="border-b border-gray-200">
+					{@render EditableField('General & Administrative', 'lineItem-17', adminAmount)}
+					<div class="px-4 py-1 text-right text-sm text-gray-500">
+						${(adminAmount / watts).toFixed(4)}/W
+					</div>
+				</div>
+
+				<!-- Net Income -->
+				<div class="border-b bg-yellow-50">
+					<div class="flex items-center justify-between px-4 py-3">
+						<span class="font-bold text-yellow-800">Net Income</span>
+						<div class="flex items-center gap-4">
+							<span class="text-lg font-bold">${netIncome.toLocaleString()}</span>
+							<span class="font-medium text-yellow-600"
+								>${(netIncome / watts).toFixed(4)}/W</span
+							>
 						</div>
 					</div>
-				{/if}
+				</div>
 			</div>
 		</div>
 	</div>
