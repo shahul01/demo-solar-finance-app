@@ -8,12 +8,20 @@ A SvelteKit app for managing solar finance.
 
 ![home.png](docs/screenshots/home.png)
 
-## Development
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Getting started
 
 ```bash
-npm run dev -- --open
+  # use node 22 directly or via nvm
+  nvm use 22
+
+  # install packages
+  pnpm i
+
+  # start sqlite db
+  pnpm run db:setup
+
+  # open client
+  pnpm run dev -- --open
 ```
 
 ## Building
@@ -21,9 +29,9 @@ npm run dev -- --open
 To create a production version of your app:
 
 ```bash
-npm run build
+pnpm run build
 ```
 
-You can preview the production build with `npm run preview`.
+You can preview the production build with `pnpm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
