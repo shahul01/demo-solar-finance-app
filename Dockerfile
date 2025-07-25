@@ -30,6 +30,7 @@ COPY --from=build --chown=sveltekit:nodejs /app/build build/
 COPY --from=build --chown=sveltekit:nodejs /app/node_modules node_modules/
 COPY --from=build --chown=sveltekit:nodejs /app/package.json .
 COPY --from=build --chown=sveltekit:nodejs /app/src/lib/server/db ./src/lib/server/db/
+COPY --from=build --chown=sveltekit:nodejs /app/scripts ./scripts/
 
 # Create data directory for SQLite database
 RUN mkdir -p /app/data && chown -R sveltekit:nodejs /app/data
@@ -41,6 +42,9 @@ ENV NODE_ENV=production
 ENV DATABASE_URL=/app/data/solar-finance.db
 ENV HOST=0.0.0.0
 ENV PORT=3000
+
+# Setup database on container start
+RUN pnpm run db:setup
 
 EXPOSE 3000
 

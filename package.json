@@ -9,7 +9,6 @@
 		"start": "node build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
-		"postinstall": "pnpm run db:setup",
 		"prebuild": "node scripts/init-db-dir.js",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
