@@ -6,7 +6,7 @@ A SvelteKit app for managing solar finance.
 
 ## Screenshots
 
-![home.png](\docs\screenshots\home.png)
+![home.png](docs/screenshots/home.png)
 
 ## Development
 
