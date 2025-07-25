@@ -1,6 +1,3 @@
-[build]
-builder = "docker"
-
 [deploy]
 startCommand = "npm run build && npm start"
 healthcheckPath = "/"

@@ -43,9 +43,7 @@ ENV DATABASE_URL=/app/data/solar-finance.db
 ENV HOST=0.0.0.0
 ENV PORT=3000
 
-# Setup database on container start
-RUN pnpm run db:setup
-
 EXPOSE 3000
 
-CMD ["node", "build"]
+# Start with database setup
+CMD ["sh", "-c", "pnpm run db:setup && node build"]
