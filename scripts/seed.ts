@@ -7,7 +7,7 @@ import {
 	costLineItems,
 	projectCosts,
 	budgetTargets
-} from '../src/lib/server/db/schema.js';
+} from '../src/lib/server/db/schema';
 
 // Load environment variables
 config();
