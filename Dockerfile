@@ -39,7 +39,7 @@ USER sveltekit
 
 # Set environment variables
 ENV NODE_ENV=production
-ENV DATABASE_URL=/app/data/solar-finance.db
+ENV DATABASE_URL=/app/data/sqlite.db
 ENV HOST=0.0.0.0
 ENV PORT=3000
 
