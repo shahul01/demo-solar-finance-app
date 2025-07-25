@@ -15,6 +15,10 @@ FROM base AS build
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
+
+# Provide temporary DATABASE_URL for build (won't be used, just prevents error)
+ENV DATABASE_URL=/tmp/build.db
+
 RUN pnpm run build
 
 # Production image
